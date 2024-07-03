@@ -2,6 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('graphs/', views.graph_list, name='graph_list'),
+    path("", views.index, name="index"),
     # Add more URLs as needed
 ]
