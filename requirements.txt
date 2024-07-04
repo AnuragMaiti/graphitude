@@ -1,4 +1,6 @@
 django==4.2.9
+django-tables2==2.7.0
+django-adaptors==0.2.5
 tensorflow
 scikit-learn
 pandas

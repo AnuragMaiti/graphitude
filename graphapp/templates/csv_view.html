@@ -1,0 +1,20 @@
+<div class="table-responsive">
+    <table id="datatable" class="table table-bordered hover table-striped">
+        <thead>
+            <tr>
+                {% for x in header %}
+                    <th>{{x}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in data %}
+            <tr>
+                {% for v in r %}
+                    <td>{{v}}</td>
+                {% endfor %}
+           </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

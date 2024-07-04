@@ -51,24 +51,24 @@ Code:
 
 ### Step 2: Create the Django app
 
-1.  **Create a Django app named `graphaap`:** Inside your project directory (`graphitude`), run:
+1.  **Create a Django app named `graphapp`:** Inside your project directory (`graphitude`), run:
 bash Code:
     
-    `python manage.py startapp graphaap`
+    `python manage.py startapp graphapp`
     
-    This will create a directory named `graphaap`.
+    This will create a directory named `graphapp`.
     
-2.  **Register the app in Django settings:** Open `graphitude/settings.py` and add `'graphaap',` to the `INSTALLED_APPS` list:
+2.  **Register the app in Django settings:** Open `graphitude/settings.py` and add `'graphapp',` to the `INSTALLED_APPS` list:
     
     python
     Code:
     
-    `INSTALLED_APPS = [     ...     'graphaap',     ... ]`
+    `INSTALLED_APPS = [     ...     'graphapp',     ... ]`
     
 
 ### Step 3: Define models (if needed)
 
-If your app `graphaap` needs models, define them in `graphaap/models.py`. For example:
+If your app `graphapp` needs models, define them in `graphapp/models.py`. For example:
 
 Python Code:
 
@@ -78,23 +78,24 @@ After defining models, you'll need to create and apply migrations:
 
 bash Code:
 
-`python manage.py makemigrations graphaap python manage.py migrate`
+`python manage.py makemigrations graphapp
+ python manage.py migrate`
 
 ### Step 4: Create views
 
-Define views in `graphaap/views.py`. Here's an example view:
+Define views in `graphapp/views.py`. Here's an example view:
 
 python
 
 Code:
 
-`from django.shortcuts import render from .models import Graph  def graph_list(request):     graphs = Graph.objects.all()     return render(request, 'graphaap/graph_list.html', {'graphs': graphs})`
+`from django.shortcuts import render from .models import Graph  def graph_list(request):     graphs = Graph.objects.all()     return render(request, 'graphapp/graph_list.html', {'graphs': graphs})`
 
 ### Step 5: Create templates
 
-1.  **Create templates directory:** Inside the `graphaap` directory, create a new directory named `templates`.
+1.  **Create templates directory:** Inside the `graphapp` directory, create a new directory named `templates`.
     
-2.  **Create HTML template:** Inside `graphaap/templates`, create `graph_list.html` (or any other needed templates):
+2.  **Create HTML template:** Inside `graphapp/templates`, create `graph_list.html` (or any other needed templates):
     
     html
     
@@ -105,7 +106,7 @@ Code:
 
 ### Step 6: Define URLs
 
-1.  **Create `urls.py` in `graphaap`:** Create a new file `urls.py` inside the `graphaap` directory and define your URLs:
+1.  **Create `urls.py` in `graphapp`:** Create a new file `urls.py` inside the `graphapp` directory and define your URLs:
     
     python
     
@@ -113,13 +114,13 @@ Code:
     
     `from django.urls import path from . import views  urlpatterns = [     path('graphs/', views.graph_list, name='graph_list'),     # Add more URLs as needed ]`
     
-2.  **Include `graphaap` URLs in project URLs:** Open `graphitude/urls.py` and include the `graphaap` URLs:
+2.  **Include `graphapp` URLs in project URLs:** Open `graphitude/urls.py` and include the `graphapp` URLs:
     
     python
     
     Code:
     
-    `from django.contrib import admin from django.urls import path, include  urlpatterns = [     path('admin/', admin.site.urls),     path('graphaap/', include('graphaap.urls')),     # Add other URL patterns as needed ]`
+    `from django.contrib import admin from django.urls import path, include  urlpatterns = [     path('admin/', admin.site.urls),     path('graphapp/', include('graphapp.urls')),     # Add other URL patterns as needed ]`
     
 
 ### Step 7: Run your Django development server
@@ -132,12 +133,12 @@ Code:
     
     `python manage.py runserver`
     
-2.  **Access your app:** Go to `http://127.0.0.1:8000/graphaap/graphs/` (or the URL defined in your `urls.py`).
+2.  **Access your app:** Go to `http://127.0.0.1:8000/graphapp/graphs/` (or the URL defined in your `urls.py`).
     
 
 ### Step 8: Further development
 
-Now that your `graphaap` app is integrated into your existing `graphitude` project, you can continue to develop additional features, templates, views, and models as per your project requirements.
+Now that your `graphapp` app is integrated into your existing `graphitude` project, you can continue to develop additional features, templates, views, and models as per your project requirements.
 
 
 
