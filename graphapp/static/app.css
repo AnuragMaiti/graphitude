@@ -1,14 +1,14 @@
 .header {
     padding: 5px;
     text-align: center;
-    background: #1abc9c;
+    background: #79AEC8;
     color: white;
     font-size: 15px;
     margin-bottom: 10px;
   }
   .button {
     margin-top: 10px;
-    background-color: #3b993e; /* Green */
+    background-color: #176189; 
     border: none;
     color: white;
     padding: 15px 32px;

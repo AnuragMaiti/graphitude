@@ -34,37 +34,8 @@
     {% block header %}
     <div id="header">
         <div id="branding">
-        {% block branding %}{% endblock %}
+          <h1 id="site-name"><a href="{% url 'index' %}">Graphitude</a></h1>
         </div>
-        {% block usertools %}
-        {% if has_permission %}
-        <div id="user-tools">
-            {% block welcome-msg %}
-                {% translate 'Welcome,' %}
-                <strong>{% firstof user.get_short_name user.get_username %}</strong>.
-            {% endblock %}
-            {% block userlinks %}
-                {% if site_url %}
-                    <a href="{{ site_url }}">{% translate 'View site' %}</a> /
-                {% endif %}
-                {% if user.is_active and user.is_staff %}
-                    {% url 'django-admindocs-docroot' as docsroot %}
-                    {% if docsroot %}
-                        <a href="{{ docsroot }}">{% translate 'Documentation' %}</a> /
-                    {% endif %}
-                {% endif %}
-                {% if user.has_usable_password %}
-                <a href="{% url 'admin:password_change' %}">{% translate 'Change password' %}</a> /
-                {% endif %}
-                <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
-                    {% csrf_token %}
-                    <button type="submit">{% translate 'Log out' %}</button>
-                </form>
-                {% include "admin/color_theme_toggle.html" %}
-            {% endblock %}
-        </div>
-        {% endif %}
-        {% endblock %}
         {% block nav-global %}{% endblock %}
     </div>
     {% endblock %}
@@ -73,8 +44,9 @@
       <nav aria-label="{% translate 'Breadcrumbs' %}">
         {% block breadcrumbs %}
           <div class="breadcrumbs">
-            <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
-            {% if title %} &rsaquo; {{ title }}{% endif %}
+            <a href="{% url 'index' %}">{% translate 'Home' %}</a>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <a href="{% url 'admin:index' %}">{% translate 'Administration' %}</a>
           </div>
         {% endblock %}
       </nav>
@@ -82,19 +54,15 @@
     {% endif %}
 
     <div class="main" id="main">
-      {% if not is_popup and is_nav_sidebar_enabled %}
+      <div>
         {% block nav-sidebar %}
-          {% include "admin/nav_sidebar.html" %}
-        {% endblock %}
-      {% endif %}
+        {% include "nav_sidebar.html" %}
+      {% endblock %}
+
+        </div>
+      <!-- {% if not is_popup and is_nav_sidebar_enabled %} -->
+      <!-- {% endif %} -->
       <div id="content-start" class="content" tabindex="-1">
-        {% block messages %}
-          {% if messages %}
-            <ul class="messagelist">{% for message in messages %}
-              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
-            {% endfor %}</ul>
-          {% endif %}
-        {% endblock messages %}
         <!-- Content -->
         <div id="content" class="{% block coltype %}colM{% endblock %}">
           {% block pretitle %}{% endblock %}

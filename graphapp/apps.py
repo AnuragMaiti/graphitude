@@ -10,6 +10,8 @@ class GraphappConfig(AppConfig):
     # Customize admin site title and header
     def ready(self):
         admin.site.site_title = 'Graphitude'
-        admin.site.site_header = 'Graphitude Administration'
+        admin.site.site_header = 'Graphitude'
         admin.site.index_title = 'Graphitude Security'
-        admin.site.site_url = '/graphapp/charts'
+        admin.site.site_url = '/graphapp'
+        admin.site.enable_nav_sidebar = True
+        
