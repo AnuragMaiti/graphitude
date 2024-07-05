@@ -3,6 +3,7 @@ from graphapp.views import charts
 from graphapp.views import csv_form
 from graphapp.views import csv_upload
 from graphapp.views import home_page
+from graphapp.views import csv_analysis
 
 
 urlpatterns = [
@@ -11,6 +12,7 @@ urlpatterns = [
     # path('csvtableview/', views.CsvTableView, name='csvtableview'),
     # Add more URLs as needed
     path('csvform/', csv_form.dynamic_form_view, name='csvform'),
+    path('csvanalysis/', csv_analysis.csv_analysis, name='csvanalysis'),
 
     path("charts/", charts.charts_view, name="charts"),
     path("charts/filter-options/", charts.get_filter_options, name="chart-filter-options"),
@@ -18,4 +20,12 @@ urlpatterns = [
     path("charts/linechart/<int:year>/", charts.get_line_chart, name="linechart"),
     path("charts/piechart/<int:year>/", charts.get_pie_chart, name="piechart"),
     path("charts/piechart2/<int:year>/", charts.get_pie_chart2, name="piechart2"),
+
+    path("csvanalysis/csvfilenames/", csv_analysis.get_csv_file_names, name="csvfilenames"),
+    path("csvanalysis/csvcolumnnames/<str:csvfilename>", csv_analysis.get_csv_column_names, name="csvcolumnnames"),
+    path("csvanalysis/barchart/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_bar_chart, name="csvbarchart"),
+    path("csvanalysis/linechart/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_line_chart, name="csvlinechart"),
+    path("csvanalysis/piechart/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_pie_chart, name="csvpiechart"),
+    path("csvanalysis/piechart2/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_pie_chart2, name="csvpiechart2"),
+
 ]
