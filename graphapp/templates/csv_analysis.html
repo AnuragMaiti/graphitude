@@ -55,7 +55,7 @@
                             $("#csv_column_name").append(new Option(option, option));
                         });
                         first_column_name =  $("#csv_column_name").children().first().val()
-                        loadAllCharts(csv_file_name, first_column_name);
+                        loadAllCharts(first_file_name, first_column_name);
 
                     },
                     error: () => console.log("Failed to fetch csv files!")

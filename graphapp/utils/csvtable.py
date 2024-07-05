@@ -2,6 +2,7 @@
 import django_tables2 as tables
 import csv
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 
 model_datatype_dict = {'bool': models.BooleanField(), 
                     'int':  models.IntegerField(), 
@@ -76,6 +77,28 @@ def extract_columns(file_path):
                     if data_types[col_num] != current_type:
                         data_types[col_num] = 'str'
     return headers, data_types
+
+
+def parse_headers(file_path):
+    with open(file_path, 'r',  encoding='utf-8') as csv_file:
+        reader = csv.DictReader(csv_file)
+        headers = reader.fieldnames
+    return headers
+
+def prepare_chart_data(file_name, header):
+    fs = FileSystemStorage()
+    file_path = fs.path(file_name)
+    chart_data = {}
+    with open(file_path, 'r',  encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            value = row[header]
+            if(value):
+                if (chart_data.get(value) is not None):
+                    chart_data[value] = chart_data[value] + 1 
+                else:
+                    chart_data[value] = 1
+    return chart_data
 
 
 

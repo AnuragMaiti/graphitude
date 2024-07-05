@@ -14,6 +14,7 @@ from django.shortcuts import render
 from utils.charts import months, colorPrimary, colorSuccess, colorDanger, generate_color_palette, get_year_dict
 from django.core.files.storage import FileSystemStorage
 from graphapp.utils.csvform import parse_headers
+from graphapp.utils.csvtable import prepare_chart_data
 
 @staff_member_required
 def get_csv_file_names(request):
@@ -37,9 +38,9 @@ def get_csv_column_names(request, csvfilename):
 
 @staff_member_required
 def get_bar_chart(request, csvfilename, csvcolumnname):
-    chart_data =  {1:2,3:4,5:6,'successfulget':True}
+    chart_data = prepare_chart_data(csvfilename, csvcolumnname)
     return JsonResponse({
-        "title": f"Bar Chart for {csvfilename} - {csvcolumnname}",
+        "title": f"Bar Chart for file: {csvfilename} and column: {csvcolumnname}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
@@ -55,7 +56,10 @@ def get_bar_chart(request, csvfilename, csvcolumnname):
 
 @staff_member_required
 def get_line_chart(request, csvfilename, csvcolumnname):
-    chart_data =  {1:2,3:4,5:6,'successful':True}
+    print(csvfilename)
+    print(csvcolumnname)
+    
+    chart_data = prepare_chart_data(csvfilename, csvcolumnname)
     return JsonResponse({
         "title": f"Line Chart for {csvfilename} - {csvcolumnname}",
         "data": {
@@ -72,8 +76,7 @@ def get_line_chart(request, csvfilename, csvcolumnname):
 
 @staff_member_required
 def get_pie_chart(request, csvfilename, csvcolumnname):
-    chart_data = [{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':False},]
-
+    chart_data = prepare_chart_data(csvfilename, csvcolumnname)
     return JsonResponse({
         "title": f"Pie Chart for {csvfilename} - {csvcolumnname}",
         "data": {
@@ -82,10 +85,7 @@ def get_pie_chart(request, csvfilename, csvcolumnname):
                 "label": "-",
                 "backgroundColor": [colorSuccess, colorDanger],
                 "borderColor": [colorSuccess, colorDanger],
-                "data": [3,4
-                    # chart_data.filter(successful=True).count(),
-                    # chart_data.filter(successful=False).count(),
-                ],
+                "data": chart_data,
             }]
         },
     })
@@ -93,7 +93,7 @@ def get_pie_chart(request, csvfilename, csvcolumnname):
 
 @staff_member_required
 def get_pie_chart2(request, csvfilename, csvcolumnname):
-    chart_data = {1:2,3:4,5:6}
+    chart_data = prepare_chart_data(csvfilename, csvcolumnname)
     return JsonResponse({
         "title": f"Pie Chart for {csvfilename} - {csvcolumnname}",
         "data": {
