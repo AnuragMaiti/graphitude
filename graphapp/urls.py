@@ -4,6 +4,7 @@ from graphapp.views import csv_form
 from graphapp.views import csv_upload
 from graphapp.views import home_page
 from graphapp.views import csv_analysis
+from graphapp.views import predictive_model
 
 
 urlpatterns = [
@@ -28,4 +29,6 @@ urlpatterns = [
     path("csvanalysis/piechart/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_pie_chart, name="csvpiechart"),
     path("csvanalysis/scatterplot/<str:csvfilename>/<str:csvcolumnname>/<str:csvcolumnname2>/", csv_analysis.get_scatter_chart, name="csvscatterplot"),
 
+    path("predictivemodel/buildpredictivemodel/", predictive_model.build_predictive_model, name="buildpredictivemodel"),
+    path("predictivemodel/testpredictivemodel/", predictive_model.test_predictive_model, name="testpredictivemodel"),
 ]
