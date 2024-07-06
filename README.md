@@ -1,11 +1,9 @@
+# Graphitude
+Welcome to Graphitude, a dynamic website that helps you to visualise your data! Simply upload your dataset and choose the column you wish to visualise and the type of visualisation. You can also select custom columns to generate a model and use it to predict values.
 
 
-# graphitude
-A website which helps you to visualise data.
 
-
-# PART-1
-
+# Quick Start
 ## Create a virtual environment (optional but recommended)
 python -m venv venv_graphitude
 ## On Windows: python -m venv venv_graphitude
@@ -142,6 +140,3 @@ Code:
 ### Step 8: Further development
 
 Now that your `graphapp` app is integrated into your existing `graphitude` project, you can continue to develop additional features, templates, views, and models as per your project requirements.
-
-
-
