@@ -30,12 +30,12 @@ def get_bar_chart(request, year):
     return JsonResponse({
         "title": f"For Bar Chart in {year}",
         "data": {
-            "labels": list(chart_data.keys()),
+            "labels": list(chart_data.keys(),),
             "datasets": [{
                 "label": "Bar Chart",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
-                "data": list(chart_data.values()),
+                "data": list(chart_data.values(),),
             }]
         },
     })
@@ -47,12 +47,12 @@ def get_line_chart(request, year):
     return JsonResponse({
         "title": f"For Line Chart in {year}",
         "data": {
-            "labels": list(chart_data.keys()),
+            "labels": list(chart_data.keys(),),
             "datasets": [{
                 "label": "Line Chart",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
-                "data": list(chart_data.values()),
+                "data": list(chart_data.values(),),
             }]
         },
     })
@@ -64,12 +64,12 @@ def get_pie_chart(request, year):
     return JsonResponse({
         "title": f"For Pie Chart in {year}",
         "data": {
-            "labels": list(chart_data.keys()),
+            "labels": list(chart_data.keys(),),
             "datasets": [{
                 "label": "Pie Chart",
                 "backgroundColor":generate_color_palette(len(chart_data)),
                 "borderColor": generate_color_palette(len(chart_data)),
-                "data": list(chart_data.values()),
+                "data": list(chart_data.values(),),
             }]
         },
     })
@@ -83,9 +83,9 @@ def get_scatter_chart(request, year, column2):
         "data": {
             "datasets": [{
                 "label": "Scatter Plot",
-                "backgroundColor": generate_color_palette(len(chart_data)),
-                "borderColor": generate_color_palette(len(chart_data)),
-                "data": chart_data,
+                "backgroundColor": colorPrimary,
+                "borderColor": colorPrimary,
+                "data": list(chart_data,),
             }]
         },
     })

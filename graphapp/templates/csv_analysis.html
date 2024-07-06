@@ -89,6 +89,10 @@
                 jsonResponse.options.forEach(option => {
                     $("#csv_column_name").append(new Option(option, option));
                 });
+                $("#csv_column_name2").empty()
+                jsonResponse.options.forEach(option => {
+                    $("#csv_column_name2").append(new Option(option, option));
+                });
             },
             error: () => console.log("Failed to fetch csv files!")
         });
@@ -112,7 +116,7 @@
         break;
       case 'Build Scatter Plot':
         const csv_column_name2 = $("#csv_column_name2").val();
-        loadscatterPlot(csv_file_name, csv_column_name, csv_column_name2);
+        loadScatterPlot(csv_file_name, csv_column_name, csv_column_name2);
         break;
     }
   });
@@ -163,7 +167,7 @@
     loadChart(piechart, `/graphapp/csvanalysis/piechart/${csv_file_name}/${csv_column_name}/`);
   }
 
-  function loadscatterPlot(csv_file_name, csv_column_name, csv_column_name2) {
+  function loadScatterPlot(csv_file_name, csv_column_name, csv_column_name2) {
     let canvas = document.getElementById("scatterplot");
     canvas.removeAttribute("hidden")
     loadChart(scatterplot, `/graphapp/csvanalysis/scatterplot/${csv_file_name}/${csv_column_name}/${csv_column_name2}/`);

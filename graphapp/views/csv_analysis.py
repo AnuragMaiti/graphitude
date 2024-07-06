@@ -43,12 +43,12 @@ def get_bar_chart(request, csvfilename, csvcolumnname):
     return JsonResponse({
         "title": f"Bar Chart for file: {csvfilename} and column: {csvcolumnname}",
         "data": {
-            "labels": list(chart_data.keys()),
+            "labels": list(chart_data.keys(),),
             "datasets": [{
                 "label": f"Bar Chart for file: {csvfilename} and column: {csvcolumnname}",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
-                "data": list(chart_data.values()),
+                "data": list(chart_data.values(),),
             }]
         },
     })
@@ -64,12 +64,12 @@ def get_line_chart(request, csvfilename, csvcolumnname):
     return JsonResponse({
         "title": f"Line Chart for {csvfilename} - {csvcolumnname}",
         "data": {
-            "labels": list(chart_data.keys()),
+            "labels": list(chart_data.keys(),),
             "datasets": [{
                 "label": f"Line Chart for {csvfilename} - {csvcolumnname}",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
-                "data": list(chart_data.values()),
+                "data": list(chart_data.values(),),
             }]
         },
     })
@@ -81,12 +81,12 @@ def get_pie_chart(request, csvfilename, csvcolumnname):
     return JsonResponse({
         "title": f"Pie Chart for {csvfilename} - {csvcolumnname}",
         "data": {
-            "labels": list(chart_data.keys()),
+            "labels": list(chart_data.keys(),),
             "datasets": [{
                 "label": f"Pie Chart for {csvfilename} - {csvcolumnname}",
-                "backgroundColor": [colorSuccess, colorDanger],
-                "borderColor": [colorSuccess, colorDanger],
-                "data": list(chart_data.values()),
+                "backgroundColor": generate_color_palette(len(chart_data)),
+                "borderColor": generate_color_palette(len(chart_data)),
+                "data": list(chart_data.values(),),
             }]
         },
     })
@@ -101,9 +101,9 @@ def get_scatter_chart(request, csvfilename, csvcolumnname, csvcolumnname2):
             "labels": list(''),
             "datasets": [{
                 "label": f"Scatter Plot for {csvfilename} - {csvcolumnname} - {csvcolumnname2}",
-                "backgroundColor": generate_color_palette(len(chart_data)),
-                "borderColor": generate_color_palette(len(chart_data)),
-                "data": chart_data,
+                "backgroundColor": colorPrimary,
+                "borderColor": colorPrimary,
+                "data": list(chart_data,),
             }]
         },
     })
