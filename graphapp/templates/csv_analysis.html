@@ -21,15 +21,24 @@
       <select name="csv_file_name" id="csv_file_name"></select>
   </div>
   <div>
-      <label for="select_column_name">Select a column:</label>
+      <label for="select_column_name">Select a column (x):</label>
       <select name="csv_column_name" id="csv_column_name"></select>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <label for="select_column_name2">Select second column (y):</label>
+      <select name="csv_column_name2" id="csv_column_name2"></select>
   </div>
   <div>
-      <input type="submit" class="button" value="Build Charts" name="refresh_charts">
+    <br>
+    <input type="submit" class="button" value="Build Bar Chart" name="refresh_bar_chart">
+    <input type="submit" class="button" value="Build Line Chart" name="refresh_line_chart">
+    <input type="submit" class="button" value="Build Pie Chart" name="refresh_pie_chart">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="submit" class="button" value="Build Scatter Plot" name="refresh_scatter_plot">
+    <br>
+    <br>
+    <br>
   </div>
 </form>
-
-
 
 <script>
   $(document).ready(function () {
@@ -55,8 +64,11 @@
                             $("#csv_column_name").append(new Option(option, option));
                         });
                         first_column_name =  $("#csv_column_name").children().first().val()
-                        loadAllCharts(first_file_name, first_column_name);
 
+                        $("#csv_column_name2").empty()
+                        jsonResponse.options.forEach(option => {
+                            $("#csv_column_name2").append(new Option(option, option));
+                        });
                     },
                     error: () => console.log("Failed to fetch csv files!")
                 });
@@ -87,7 +99,22 @@
     event.preventDefault();
     const csv_file_name = $("#csv_file_name").val();
     const csv_column_name = $("#csv_column_name").val();
-    loadAllCharts(csv_file_name, csv_column_name);
+    const action = event.originalEvent.submitter.value;
+    switch (action) {
+      case 'Build Bar Chart':
+        loadBarChart(csv_file_name, csv_column_name);
+        break;
+      case 'Build Line Chart':
+        loadLineChart(csv_file_name, csv_column_name);
+        break;
+      case 'Build Pie Chart':
+        loadPieChart(csv_file_name, csv_column_name);
+        break;
+      case 'Build Scatter Plot':
+        const csv_column_name2 = $("#csv_column_name2").val();
+        loadscatterPlot(csv_file_name, csv_column_name, csv_column_name2);
+        break;
+    }
   });
 
   function loadChart(chart, endpoint) {
@@ -118,12 +145,22 @@
     });
   }
 
-  function loadAllCharts(csv_file_name, csv_column_name) {
+  function loadBarChart(csv_file_name, csv_column_name) {
     loadChart(barchart, `/graphapp/csvanalysis/barchart/${csv_file_name}/${csv_column_name}/`);
-    loadChart(linechart, `/graphapp/csvanalysis/linechart/${csv_file_name}/${csv_column_name}/`);
-    loadChart(piechart, `/graphapp/csvanalysis/piechart/${csv_file_name}/${csv_column_name}/`);
-    loadChart(piechart2, `/graphapp/csvanalysis/piechart2/${csv_file_name}/${csv_column_name}/`);
   }
+
+  function loadLineChart(csv_file_name, csv_column_name) {
+    loadChart(linechart, `/graphapp/csvanalysis/linechart/${csv_file_name}/${csv_column_name}/`);
+  }
+
+  function loadPieChart(csv_file_name, csv_column_name) {
+    loadChart(piechart, `/graphapp/csvanalysis/piechart/${csv_file_name}/${csv_column_name}/`);
+  }
+
+  function loadscatterPlot(csv_file_name, csv_column_name, csv_column_name2) {
+    loadChart(scatterplot, `/graphapp/csvanalysis/scatterplot/${csv_file_name}/${csv_column_name}/${csv_column_name2}/`);
+  }
+
 </script>
 
 <div class="row">
@@ -137,7 +174,7 @@
     <canvas id="piechart"></canvas>
   </div>
   <div class="col-6">
-    <canvas id="piechart2"></canvas>
+    <canvas id="scatterplot"></canvas>
   </div>
 </div>
 <script>
@@ -184,9 +221,9 @@
       }
     }
   });
-  let piechart2Ctx = document.getElementById("piechart2").getContext("2d");
-  let piechart2 = new Chart(piechart2Ctx, {
-    type: "pie",
+  let scatterplotCtx = document.getElementById("scatterplot").getContext("2d");
+  let scatterplot = new Chart(scatterplotCtx, {
+    type: "scatter",
     options: {
       responsive: true,
       maintainAspectRatio: false,

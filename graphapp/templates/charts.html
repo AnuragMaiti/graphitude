@@ -25,6 +25,7 @@
         });
         // Load data for the first optionx`
         loadAllCharts($("#year").children().first().val());
+        loadScatterCharts($("#year").children().first().val(), "Price");
       },
       error: () => console.log("Failed to fetch chart filter options!")
     });
@@ -69,8 +70,12 @@
     loadChart(barchart, `/graphapp/charts/barchart/${year}/`);
     loadChart(linechart, `/graphapp/charts/linechart/${year}/`);
     loadChart(piechart, `/graphapp/charts/piechart/${year}/`);
-    loadChart(piechart2, `/graphapp/charts/piechart2/${year}/`);
   }
+
+  function loadScatterCharts(year, column2) {
+    loadChart(scatterplot, `/graphapp/charts/scatterplot/${year}/${column2}`);
+  }
+
 </script>
 <div class="row">
   <div class="col-6">
@@ -83,7 +88,7 @@
     <canvas id="piechart"></canvas>
   </div>
   <div class="col-6">
-    <canvas id="piechart2"></canvas>
+    <canvas id="scatterplot"></canvas>
   </div>
 </div>
 <script>
@@ -130,9 +135,9 @@
       }
     }
   });
-  let piechart2Ctx = document.getElementById("piechart2").getContext("2d");
-  let piechart2 = new Chart(piechart2Ctx, {
-    type: "pie",
+  let scatterplotCtx = document.getElementById("scatterplot").getContext("2d");
+  let scatterplot = new Chart(scatterplotCtx, {
+    type: "scatter",
     options: {
       responsive: true,
       maintainAspectRatio: false,
