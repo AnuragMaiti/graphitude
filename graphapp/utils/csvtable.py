@@ -101,6 +101,19 @@ def prepare_chart_data(file_name, header):
     return chart_data
 
 
+def prepare_scatter_plot_data(file_name, header, header2):
+    fs = FileSystemStorage()
+    file_path = fs.path(file_name)
+    chart_data = []
+    with open(file_path, 'r',  encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            x = row[header]
+            y = row[header2]
+            if(x and y):
+                chart_data.append({'x':x, 'y':y})
+    return chart_data
+
 
 # class CsvTable(tables.Table):
 #     class Meta:

@@ -77,16 +77,15 @@ def get_pie_chart(request, year):
 
 @staff_member_required
 def get_scatter_chart(request, year, column2):
-    chart_data = {1:2,3:4,5:6}
+    chart_data = [{'x':2,'y':5}, {'x':11,'y':15}, {'x':21,'y':52}, {'x':31,'y':54}]
     return JsonResponse({
         "title": f"For Scatter Plot in {year} - {column2}",
         "data": {
-            "labels": list(chart_data.keys()),
             "datasets": [{
                 "label": "Scatter Plot",
                 "backgroundColor": generate_color_palette(len(chart_data)),
                 "borderColor": generate_color_palette(len(chart_data)),
-                "data": list(chart_data.values()),
+                "data": chart_data,
             }]
         },
     })
