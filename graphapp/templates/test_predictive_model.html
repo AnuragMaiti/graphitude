@@ -35,41 +35,35 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: "/graphapp/csvanalysis/csvfilenames/",
+            url: "/graphapp/predictivemodel/modelnames",
             type: "GET",
             dataType: "json",
             success: (jsonResponse) => {
-                // Load all the file names
                 $("#model_name").empty()
+                jsonResponse.options.forEach(option => {
+                    $("#model_name").append(new Option(option, option));
+                });
+
             },
             error: () => console.log("Failed to fetch csv files!")
         });
     });
 
     $("#model_name").on('change', function (event) {
-        var filename = $(this).val();
-        path = `/graphapp/csvanalysis/csvcolumnnames/${filename}`;
+        var model_name = $(this).val();
+        path = `/graphapp/predictivemodel/models/${model_name}`;
         $.ajax({
             url: path,
             type: "GET",
             dataType: "json",
             success: (jsonResponse) => {
-                $("#csv_column_name").empty()
-                jsonResponse.options.forEach(option => {
-                    //TODO Add all the columns for selection 
-                    $("#csv_column_name").append(new Option(option, option));
-                });
-                $("#csv_column_name2").empty()
-                jsonResponse.options.forEach(option => {
-                    $("#csv_column_name2").append(new Option(option, option));
-                });
+                alert(jsonResponse.model_json)
             },
             error: () => console.log("Failed to fetch csv files!")
         });
     });
 
-
-    $("#csvAnalysisForm").on("submit", (event) => {
+    $("#model_prediction_form").on("submit", (event) => {
         event.preventDefault();
         const model_name = $("#model_name").val();
         const csv_column_name = $("#csv_column_name").val();
