@@ -16,11 +16,15 @@
     <div>&nbsp;
     </div>
     <div>
-        <label for="model_name">Predictive Model:</label>
-        <select name="model_name" id="model_name"></select>
+        <label for="graphapp_form_model_name">Predictive Model:</label>
+        <select name="graphapp_form_model_name" id="graphapp_form_model_name"></select>
     </div>
     <div>
-        <label for="select_column_name">Set feature values:</label>
+        <label for="set_column_values">Set feature values:</label>
+    </div>
+    <div>
+        <table  id="setcolumnvaluesContainer" style:"border: 0px;"></table>
+        <!-- Checkboxes will be added here -->
     </div>
     <div>
         <br>
@@ -35,32 +39,57 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: "/graphapp/predictivemodel/modelnames",
+            url: "/graphapp/predictivemodel/testpredictivemodel/modelnames",
             type: "GET",
             dataType: "json",
             success: (jsonResponse) => {
-                $("#model_name").empty()
+                $("#graphapp_form_model_name").empty()
                 jsonResponse.options.forEach(option => {
-                    $("#model_name").append(new Option(option, option));
+                    $("#graphapp_form_model_name").append(new Option(option, option));
                 });
-
+                first_model_name = $("#graphapp_form_model_name").children().first().val();
+                refresh_column_inputs(first_model_name)
             },
             error: () => console.log("Failed to fetch csv files!")
         });
     });
 
-    $("#model_name").on('change', function (event) {
-        var model_name = $(this).val();
-        path = `/graphapp/predictivemodel/models/${model_name}`;
+    function generate_column_inputs(selected_columns) {
+        $("#setcolumnvaluesContainer").empty()
+        selected_columns.forEach(column => {
+            var setcolumnvaluesContainer = $('<input>').attr({
+                type: 'text',
+                id: column, // Remove spaces for ID
+                name: column, // Name attribute for grouping checkboxes
+                value: "",
+                style: 'margin-right: 10px'
+            });
+            col='<tr style:"border: 0px;"><td style:"border: 0px;"><label for="' + column + '">' + column + '</label></td><td style:"border: 0px;"><input type="text" id="' + column + '" name="' + column + '" style="margin-right: 10px"></td><tr>'
+
+            // var label = $('<label>').text(column).attr('for', column);
+
+            $('#setcolumnvaluesContainer').append(col)
+            //.append(setcolumnvaluesContainer).append('<br>');
+        });
+
+    }
+
+    function refresh_column_inputs(model_name) {
+        path = `/graphapp/predictivemodel/testpredictivemodel/models/${model_name}`;
         $.ajax({
             url: path,
             type: "GET",
             dataType: "json",
             success: (jsonResponse) => {
-                alert(jsonResponse.model_json)
+                generate_column_inputs(jsonResponse.options.selected_columns)
             },
             error: () => console.log("Failed to fetch csv files!")
         });
+    }
+
+    $("#graphapp_form_model_name").on('change', function (event) {
+        var model_name = $(this).val();
+        refresh_column_inputs(model_name);
     });
 
     $("#model_prediction_form").on("submit", (event) => {

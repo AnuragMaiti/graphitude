@@ -76,3 +76,12 @@ def get_model_names(request):
     return JsonResponse({
         "options": model_names,
     })
+
+def get_model(request, modelname):
+    fs = FileSystemStorage()
+    file_path = fs.path(f"models/{modelname}.json")
+    with fs.open(file_path, 'r') as file:
+        model_json = json.loads(file.read())
+    return JsonResponse({
+        "options": model_json,
+    })
