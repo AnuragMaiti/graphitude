@@ -7,6 +7,8 @@ from django.shortcuts import render
 import json
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
+from graphapp.views.model_creator import create_model
+from graphapp.views.model_creator import predict
 
 
 class PredictiveModelForm(forms.Form):
@@ -37,12 +39,7 @@ def build_predictive_model(request):
         with fs.open(f"models/{graphapp_form_model_name}.json", 'w') as file:
               file.write(json_string)
 
-        print(graphapp_form_file_name)
-        print(graphapp_form_model_name)
-        print(graphapp_form_target_column_name)
-        print(graphapp_form_predictive_model_algorithm)
-        print(selected_columns)
-
+        create_model(model_json)
         form = PredictiveModelForm(request.POST)
         if form.is_valid():
             selected_columns = form.cleaned_data['selected_columns']
@@ -56,11 +53,24 @@ def build_predictive_model(request):
 
 def test_predictive_model(request):
     if request.method == 'POST':
-        form = PredictiveModelForm(request.POST)
-        if form.is_valid():
-            selected_columns = form.cleaned_data['selected_columns']
-            # Process selected rows as needed
-            return render(request, 'test_predictive_model.html', {'selected_columns': selected_columns})
+
+        graphapp_form_file_name = request.POST['graphapp_form_file_name']
+        graphapp_form_model_name = request.POST['graphapp_form_model_name']
+        predict_json = {}
+        predict_json['graphapp_form_file_name'] = graphapp_form_file_name
+        predict_json['graphapp_form_model_name'] = graphapp_form_model_name
+        feature_values = {}
+        for key in request.POST:
+            print(key)
+            # Example: All dynamically generated column fields start with 'graphapp_column_'
+            if key.startswith('graphapp_form_model_column_'):
+                value = request.POST[key]
+                feature_name = key[27:]
+                feature_values[feature_name]=[value,]
+    
+        predict_json['feature_values'] = feature_values
+        predicted_value = predict(predict_json)
+        return render(request, 'test_predictive_model.html', {'predicted_value': predicted_value})
     else:
         form = PredictiveModelForm()
 
