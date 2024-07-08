@@ -12,7 +12,7 @@ urlpatterns = [
     # Add more URLs as needed
     path('csvform/', csv_form.dynamic_form_view, name='csvform'),
 
-    path("charts/", charts.charts_view, name="graphapp-charts"),
+    path("charts/", charts.charts_view, name="charts"),
     path("charts/filter-options/", charts.get_filter_options, name="chart-filter-options"),
     path("charts/barchart/<int:year>/", charts.get_bar_chart, name="barchart"),
     path("charts/linechart/<int:year>/", charts.get_line_chart, name="linechart"),

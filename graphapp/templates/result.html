@@ -1,0 +1,15 @@
+{% load static %}
+{% load render_table from django_tables2 %}
+<link rel="stylesheet" href="{% static 'app.css' %}">
+<div class="custom-file mb-4">
+    <div class="header">
+        <h1>Result</h1>
+    </div>
+</div>
+{% if data %}
+<div class="table-responsive">
+   <div class="container">
+        <h1>Result Details</h1>
+    </div>
+</div>
+{% endif %}
