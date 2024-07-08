@@ -12,23 +12,34 @@ from django.db.models.functions import ExtractYear, ExtractMonth
 from django.http import JsonResponse
 from django.shortcuts import render
 from utils.charts import months, colorPrimary, colorSuccess, colorDanger, generate_color_palette, get_year_dict
-
+from django.core.files.storage import FileSystemStorage
+from graphapp.utils.csvform import parse_headers
 
 @staff_member_required
-def get_filter_options(request):
-    # grouped_purchases = Purchase.objects.annotate(year=ExtractYear("time")).values("year").order_by("-year").distinct()
-    # options = [purchase["year"] for purchase in grouped_purchases]
-    options = [2000, 2001, 2002]
+def get_csv_file_names(request):
+    fs = FileSystemStorage()
+    file_path = fs.path('.')
+    all_dir_files = fs.listdir(file_path)
+    options = all_dir_files[1]
     return JsonResponse({
         "options": options,
     })
 
+@staff_member_required
+def get_csv_column_names(request, csvfilename):
+    fs = FileSystemStorage()
+    csv_file = fs.path(csvfilename)
+    column_names = parse_headers(csv_file)
+    options = column_names
+    return JsonResponse({
+        "options": options,
+    })
 
 @staff_member_required
-def get_bar_chart(request, year):
-    chart_data =  {1:2,3:4,5:6,'successful':True}
+def get_bar_chart(request, csvfilename, csvcolumnname):
+    chart_data =  {1:2,3:4,5:6,'successfulget':True}
     return JsonResponse({
-        "title": f"For Bar Chart in {year}",
+        "title": f"Bar Chart for {csvfilename} - {csvcolumnname}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
@@ -41,11 +52,12 @@ def get_bar_chart(request, year):
     })
 
 
+
 @staff_member_required
-def get_line_chart(request, year):
+def get_line_chart(request, csvfilename, csvcolumnname):
     chart_data =  {1:2,3:4,5:6,'successful':True}
     return JsonResponse({
-        "title": f"For Line Chart in {year}",
+        "title": f"Line Chart for {csvfilename} - {csvcolumnname}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
@@ -59,11 +71,11 @@ def get_line_chart(request, year):
 
 
 @staff_member_required
-def get_pie_chart(request, year):
+def get_pie_chart(request, csvfilename, csvcolumnname):
     chart_data = [{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':False},]
 
     return JsonResponse({
-        "title": f"For Pie Chart in {year}",
+        "title": f"Pie Chart for {csvfilename} - {csvcolumnname}",
         "data": {
             "labels": ["Successful", "Unsuccessful"],
             "datasets": [{
@@ -80,10 +92,10 @@ def get_pie_chart(request, year):
 
 
 @staff_member_required
-def get_pie_chart2(request, year):
+def get_pie_chart2(request, csvfilename, csvcolumnname):
     chart_data = {1:2,3:4,5:6}
     return JsonResponse({
-        "title": f"For Pie Chart2  in {year}",
+        "title": f"Pie Chart for {csvfilename} - {csvcolumnname}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
@@ -97,5 +109,5 @@ def get_pie_chart2(request, year):
 
 
 @staff_member_required
-def charts_view(request):
-    return render(request, "charts.html", {})
+def csv_analysis(request):
+    return render(request, "csv_analysis.html", {})
