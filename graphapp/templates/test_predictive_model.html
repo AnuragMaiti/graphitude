@@ -25,12 +25,15 @@
         <input type="hidden" id="graphapp_form_file_name" name="graphapp_form_file_name" value="">
     </div>
     <div>
-        <table  id="setcolumnvaluesContainer"></table>
+        <table id="setcolumnvaluesContainer" style="border-style: none;"></table>
         <!-- Checkboxes will be added here -->
     </div>
     <div>
         <br>
-        <input type="submit" class="button" value="Run Model for Prediction" name="build">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" class="button" value="Run Model for Prediction" name="build">
         <br>
     </div>
 </form>
@@ -69,7 +72,7 @@
             //     value: column,
             //     style: 'margin-right: 10px'
             // });
-            col='<tr style:"border: 0px;"><td style:"border: 0px;"><label for="' + prefixed_columnname + '">' + column + '</label></td><td style:"border: 0px;"><input type="text" id="' + prefixed_columnname + '" name="' + prefixed_columnname + '" style="margin-right: 10px"></td><tr>'
+            col='<tr><td style="border-bottom:0;vertical-align:middle!important"><label for="' + prefixed_columnname + '">' + column + '</label></td><td style="border-bottom:0;vertical-align:center;!important"><input type="text" id="' + prefixed_columnname + '" name="' + prefixed_columnname + '"></td><tr>'
 
             // var label = $('<label>').text(column).attr('for', column);
 
