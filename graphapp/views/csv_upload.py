@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .models import Graph
 from django.http import HttpRequest, HttpResponse
 from django.views.generic import TemplateView
 import io
@@ -7,12 +6,15 @@ from django.shortcuts import render
 import csv
 from django.core.files.storage import FileSystemStorage
 from django.core.files.storage import default_storage
-from .tables import load_csv_table
+from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Count, F, Sum, Avg
+from django.db.models.functions import ExtractYear, ExtractMonth
+from django.http import JsonResponse
+from django.shortcuts import render
+from graphapp.utils.csvtable import load_csv_table
 
-def index(request: HttpRequest) -> HttpResponse:
-    context = {}
-    return render(request, "index.html", context)
 
+from utils.charts import months, colorPrimary, colorSuccess, colorDanger, generate_color_palette, get_year_dict
 
 class CsvUploader(TemplateView):
     template_name = 'csv_uploader.html'
@@ -64,3 +66,4 @@ class CsvUploader(TemplateView):
         context['header'] = header
         context['data'] = data
         return render(request, self.template_name, context)
+

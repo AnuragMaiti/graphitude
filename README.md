@@ -27,6 +27,9 @@ cd graphitude
 ## Install Django
 pip install django
 
+## Git clone
+clone from 
+
 ## Create a new Django project named 'graphitude'
 django-admin startproject graphitude .
 ## Note the dot (.) at the end, which ensures Django creates files in the current directory

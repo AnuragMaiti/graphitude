@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 
-class CsvFileModel(models.Model):
+class CsvModel(models.Model):
     csv_name = models.CharField(max_length=250, null=False, blank=False)
     name = models.CharField(max_length=250, null=False, blank=False)
     data_type = models.TextField(max_length=50,null=False, blank=False)
