@@ -1,0 +1,1 @@
+{"graphapp_form_file_name": "CarPrice.csv", "graphapp_form_model_name": "testmodel", "graphapp_form_target_column_name": "fueltype", "graphapp_form_predictive_model_algorithm": "Logistic Regression", "selected_columns": ["enginetype", "cylindernumber", "fuelsystem", "boreratio", "stroke"]}
