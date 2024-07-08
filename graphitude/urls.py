@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from graphapp.views import home_page
 
 urlpatterns = [
     path('graphapp/', include('graphapp.urls')),
     path('admin/', admin.site.urls),
-    # Add other URL patterns as needed
+    path("", home_page.index, name="index"),
 ]
 
 # only in development
