@@ -4,12 +4,7 @@
         </th>
         <tr>
             <td>
-                <a href="{% url 'csvuploader' %}">Upload CSV</a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <a href="{% url 'charts' %}">Charts</a>
+                <a href="{% url 'csvuploader' %}">CSV Upload</a>
             </td>
         </tr>
         <tr>
@@ -19,12 +14,17 @@
         </tr>
         <tr>
             <td>
-                <a href="{% url 'csvform' %}">CSV Form</a>
+                <a href="{% url 'buildpredictivemodel' %}">AI Predictive Model Build</a>
             </td>
         </tr>
         <tr>
             <td>
-                <a href="{{ site_url }}">Model Performance</a>
+                <a href="{% url 'testpredictivemodel' %}">AI Predictive Model Test</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="{% url 'charts' %}">Demo Charts</a>
             </td>
         </tr>
     </table>

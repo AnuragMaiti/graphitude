@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous">
+    </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-v4-grid-only@1.0.0/dist/bootstrap-grid.min.css">
+
+<form id="buildPredictiveModelForm">
+    <div class="breadcrumbs" style="font-weight: bold;text-align: left;">
+        Select a csv file and then select label column and feature columns
+    </div>
+    <br>
+    <div>
+        <label for="csv_file_name">CSV File:</label>
+        <select name="csv_file_name" id="csv_file_name"></select>
+    </div>
+    <br>
+    <div>
+        <label for="target_column_name">Label Column:</label>
+        <select name="target_column_name" id="target_column_name"></select>
+    </div>
+    <br>
+    <div>
+        <label for="select_column_name">Feature Columns:</label>
+    </div>
+    <div id="columnSelectionCheckboxContainer">
+        <!-- Checkboxes will be added here -->
+    </div>
+    <br>
+    <div>
+        <label for="predictive_model_algorithm">Select Algorithm:</label>
+        <select name="predictive_model_algorithm" id="predictive_model_algorithm">
+            <option value="LinearRegression">Linear Regression</option>
+            <option value="LogisticRegression">Logistic Regression</option>
+            <option value="DecisionTree">Decision Tree</option>
+        </select>
+    </div>
+    <br>
+    <label for="predictivemodelname">Model Name:</label>
+        <input type="text" id="predictivemodelname" name="predictivemodelname" placeholder="Enter model name" required>
+    <div>
+        <br>
+        <input type="submit" class="button" value="Build Model" name="build">
+        <br>
+    </div>
+</form>
+
+<script>
+    function generate_column_selection_options(filename){
+        path = `/graphapp/csvanalysis/csvcolumnnames/${filename}`;
+        $.ajax({
+            url: path,
+            type: "GET",
+            dataType: "json",
+            success: (jsonResponse) => {
+                $("#columnSelectionCheckboxContainer").empty()
+                jsonResponse.options.forEach(option => {
+
+                    $("#target_column_name").empty()
+                    jsonResponse.options.forEach(option => {
+                        $("#target_column_name").append(new Option(option, option));
+                    });
+
+
+                    var checkbox = $('<input>').attr({
+                        type: 'checkbox',
+                        id: option.replace(/\s/g, ''), // Remove spaces for ID
+                        name: 'options', // Name attribute for grouping checkboxes
+                        value: option,
+                        style: 'margin-right: 10px'
+                    });
+                    var label = $('<label>').text(option).attr('for', option.replace(/\s/g, ''));
+                    $('#columnSelectionCheckboxContainer').append(checkbox).append(label).append('<br>');
+                });
+            },
+            error: () => console.log("Failed to fetch csv files!")
+        });
+    }
+    
+    $(document).ready(function () {
+        $.ajax({
+            url: "/graphapp/csvanalysis/csvfilenames/",
+            type: "GET",
+            dataType: "json",
+            success: (jsonResponse) => {
+                // Load all the file names
+                $("#csv_file_name").empty()
+                jsonResponse.options.forEach(option => {
+                    $("#csv_file_name").append(new Option(option, option));
+                });
+                first_file_name = $("#csv_file_name").children().first().val();
+                generate_column_selection_options(first_file_name);
+            },
+            error: () => console.log("Failed to fetch csv files!")
+        });
+    });
+
+    $("#csv_file_name").on('change', function (event) {
+        var filename = $(this).val();
+        generate_column_selection_options(filename);
+    });
+
+    $("#buildPredictiveModelForm").on("submit", (event) => {
+        event.preventDefault();
+        const csv_file_name = $("#csv_file_name").val();
+        const csv_column_name = $("#csv_column_name").val();
+        const action = event.originalEvent.submitter.value;
+    });
+</script>
+
+{% endblock content %}
