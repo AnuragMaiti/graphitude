@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('graphapp/', include('graphapp.urls')),
+    path('admin/', admin.site.urls),
     # Add other URL patterns as needed
 ]
