@@ -46,7 +46,6 @@ def transform(input_json):
 
     X = data[input_json["selected_columns"]]
     y = data[input_json["graphapp_form_target_column_name"]]
-
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
     categorical_features = list()
@@ -71,11 +70,11 @@ def transform(input_json):
     X_test_scaled = X_test.copy() 
     X_test_scaled = scaler.fit_transform(X_test)
 
-    return X_train_scaled, X_test_scaled, y_train, y_test
+    return X_train_scaled, X_test_scaled, y_train, y_test, X.dtypes
 
 
 def create_model(input_json):
-    X_train_scaled, X_test_scaled, y_train, y_test = transform(input_json)
+    X_train_scaled, X_test_scaled, y_train, y_test, X_datatypes = transform(input_json)
     clf = classifiers[input_json["graphapp_form_predictive_model_algorithm"]]
     clf.fit(X_train_scaled, y_train)
     y_pred = clf.predict(X_test_scaled)
@@ -87,10 +86,9 @@ def create_model(input_json):
 
     with fs.open(file_path, 'wb') as file:
         pickle.dump(clf, file)
-    return pklFile
+    return pklFile, X_datatypes
 
 def predict(predict_json):
-    print(predict_json)
     data_dict = predict_json["feature_values"]
     data = pd.DataFrame(data_dict)
 
@@ -109,8 +107,6 @@ def predict(predict_json):
     for feature in data.columns:
         if is_string_dtype(data[feature]):
             categorical_features.append(feature)
-
-    print(categorical_features)
 
     for feature in categorical_features:
         label_encoder.fit(og[feature])

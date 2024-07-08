@@ -57,9 +57,6 @@ def get_bar_chart(request, csvfilename, csvcolumnname):
 
 @staff_member_required
 def get_line_chart(request, csvfilename, csvcolumnname):
-    print(csvfilename)
-    print(csvcolumnname)
-    
     chart_data = prepare_chart_data(csvfilename, csvcolumnname)
     return JsonResponse({
         "title": f"Line Chart for {csvfilename} - {csvcolumnname}",
