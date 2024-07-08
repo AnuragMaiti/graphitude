@@ -26,9 +26,9 @@ def add_class_method(cls):
     return cls
 
 def define_csv_table_class(headers, data_types):
-    attrs = dict((headers[key], tables.Column()) for key in data_types)
     model_class = define_csv_model_class(headers, data_types)
-    Meta = type('Meta', (object, ), {'model': model_class})
+    Meta = type('Meta', (object, ), {'model': model_class, 'exclude':('id',)})
+    attrs = dict((headers[key], tables.Column()) for key in data_types)
     attrs['Meta'] = Meta
     table_class = type('CsvFileTable', (tables.Table,), attrs)
     return table_class

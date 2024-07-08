@@ -1,20 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
 {% load render_table from django_tables2 %}
-
-<!doctype html>
-<html lang="en">
-<head>
-    <title>CSV View</title>
-    <!-- Optional: Include Bootstrap 4 CSS for styling -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-
-<body>
-    <div class="container">
-        <div class="scrollable-box">
-            {% render_table table %}
-        </div>
+{% block content %}
+<div class="container">
+    <div style="overflow: auto;">
+        {% render_table table %}
     </div>
-</body>
-
-</html>
+</div>
+{% endblock content %}
