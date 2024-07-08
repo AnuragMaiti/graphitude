@@ -16,11 +16,9 @@ from utils.charts import months, colorPrimary, colorSuccess, colorDanger, genera
 
 @staff_member_required
 def get_filter_options(request):
-    # grouped_purchases = Purchase.objects.annotate(year=ExtractYear("time")).values("year").order_by("-year").distinct()
-    # options = [purchase["year"] for purchase in grouped_purchases]
-    options = [2000, 2001, 2002]
+    years = [2000, 2001, 2002]
     return JsonResponse({
-        "options": options,
+        "options": years,
     })
 
 
@@ -93,4 +91,4 @@ def get_scatter_chart(request, year, column2):
 
 @staff_member_required
 def charts_view(request):
-    return render(request, "charts.html", {})
+    return render(request, "demo_charts.html", {})

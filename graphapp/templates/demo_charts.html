@@ -15,7 +15,7 @@
 <script>
   $(document).ready(function() {
     $.ajax({
-      url: "/graphapp/charts/filter-options/",
+      url: "/graphapp/democharts/filter-options/",
       type: "GET",
       dataType: "json",
       success: (jsonResponse) => {
@@ -67,13 +67,13 @@
   }
 
   function loadAllCharts(year) {
-    loadChart(barchart, `/graphapp/charts/barchart/${year}/`);
-    loadChart(linechart, `/graphapp/charts/linechart/${year}/`);
-    loadChart(piechart, `/graphapp/charts/piechart/${year}/`);
+    loadChart(barchart, `/graphapp/democharts/barchart/${year}/`);
+    loadChart(linechart, `/graphapp/democharts/linechart/${year}/`);
+    loadChart(piechart, `/graphapp/democharts/piechart/${year}/`);
   }
 
   function loadScatterCharts(year, column2) {
-    loadChart(scatterplot, `/graphapp/charts/scatterplot/${year}/${column2}`);
+    loadChart(scatterplot, `/graphapp/democharts/scatterplot/${year}/${column2}`);
   }
 
 </script>

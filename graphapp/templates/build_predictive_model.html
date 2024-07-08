@@ -54,7 +54,28 @@
 </form>
 
 <script>
-    function generate_column_selection_options(filename){
+    current_all_column_names = []
+    function generate_feature_column_check_boxes(all_column_names, selected_target_column_name){
+        $("#columnSelectionCheckboxContainer").empty()
+        all_column_names.forEach(column => {
+            var prefix = 'graphapp_form_model_column_'
+            prefixed_column = prefix.concat(column.replace(/\s/g, ''))
+
+            var checkbox = $('<input>').attr({
+                type: 'checkbox',
+                id: prefixed_column, // Remove spaces for ID
+                name: prefixed_column, // Name attribute for grouping checkboxes
+                value: column,
+                style: 'margin-right: 10px'
+            });
+            if(selected_target_column_name != column){    
+                var label = $('<label>').text(column).attr('for', prefixed_column);
+                $('#columnSelectionCheckboxContainer').append(checkbox).append(label).append('<br>');
+            }
+        });
+    }
+
+    function generate_target_column_selection_options(filename){
         path = `/graphapp/csvanalysis/csvcolumnnames/${filename}`;
         $.ajax({
             url: path,
@@ -65,22 +86,9 @@
                 jsonResponse.options.forEach(option => {
                     $("#graphapp_form_target_column_name").append(new Option(option, option));
                 });
-
-                $("#columnSelectionCheckboxContainer").empty()
-                jsonResponse.options.forEach(option => {
-                    var prefix = 'graphapp_form_model_column_'
-                    prefixed_option = prefix.concat(option.replace(/\s/g, ''))
-
-                    var checkbox = $('<input>').attr({
-                        type: 'checkbox',
-                        id: prefixed_option, // Remove spaces for ID
-                        name: prefixed_option, // Name attribute for grouping checkboxes
-                        value: option,
-                        style: 'margin-right: 10px'
-                    });
-                    var label = $('<label>').text(option).attr('for', prefixed_option);
-                    $('#columnSelectionCheckboxContainer').append(checkbox).append(label).append('<br>');
-                });
+                current_all_column_names = jsonResponse.options;
+                first_target_column_name =  $("#graphapp_form_target_column_name").children().first().val()
+                generate_feature_column_check_boxes(jsonResponse.options, first_target_column_name)
             },
             error: () => console.log("Failed to fetch csv files!")
         });
@@ -98,7 +106,7 @@
                     $("#graphapp_form_file_name").append(new Option(option, option));
                 });
                 first_file_name = $("#graphapp_form_file_name").children().first().val();
-                generate_column_selection_options(first_file_name);
+                generate_target_column_selection_options(first_file_name);
             },
             error: () => console.log("Failed to fetch csv files!")
         });
@@ -106,7 +114,7 @@
 
     $("#graphapp_form_file_name").on('change', function (event) {
         var filename = $(this).val();
-        generate_column_selection_options(filename);    
+        generate_target_column_selection_options(filename);    
     });
 
     $("#buildPredictiveModelForm").on("submit", (event) => {
@@ -114,6 +122,12 @@
         const graphapp_form_target_column_name = $("#graphapp_form_target_column_name").val();
         // const action = event.originalEvent.submitter.value;
     });
+
+    $("#graphapp_form_target_column_name").on('change', function (event) {
+        var selected_target_column_name = $(this).val();
+        generate_feature_column_check_boxes(current_all_column_names, selected_target_column_name);    
+    });
+
 </script>
 
 {% endblock content %}

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from graphapp.views import charts
+from graphapp.views import demo_charts
 from graphapp.views import csv_form
 from graphapp.views import csv_uploader
 from graphapp.views import home_page
@@ -15,12 +15,12 @@ urlpatterns = [
     path('csvform/', csv_form.dynamic_form_view, name='csvform'),
     path('csvanalysis/', csv_analysis.csv_analysis, name='csvanalysis'),
 
-    path("charts/", charts.charts_view, name="charts"),
-    path("charts/filter-options/", charts.get_filter_options, name="chart-filter-options"),
-    path("charts/barchart/<int:year>/", charts.get_bar_chart, name="barchart"),
-    path("charts/linechart/<int:year>/", charts.get_line_chart, name="linechart"),
-    path("charts/piechart/<int:year>/", charts.get_pie_chart, name="piechart"),
-    path("charts/scatterplot/<int:year>/<str:column2>", charts.get_scatter_chart, name="scatterplot"),
+    path("democharts/", demo_charts.charts_view, name="democharts"),
+    path("democharts/filter-options/", demo_charts.get_filter_options, name="demo-chart-filter-options"),
+    path("democharts/barchart/<int:year>/", demo_charts.get_bar_chart, name="demo-barchart"),
+    path("democharts/linechart/<int:year>/", demo_charts.get_line_chart, name="demo-linechart"),
+    path("democharts/piechart/<int:year>/", demo_charts.get_pie_chart, name="demo-piechart"),
+    path("democharts/scatterplot/<int:year>/<str:column2>", demo_charts.get_scatter_chart, name="demo-scatterplot"),
 
     path("csvanalysis/csvfilenames/", csv_analysis.get_csv_file_names, name="csvfilenames"),
     path("csvanalysis/csvcolumnnames/<str:csvfilename>", csv_analysis.get_csv_column_names, name="csvcolumnnames"),
