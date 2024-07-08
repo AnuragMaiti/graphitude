@@ -15,6 +15,7 @@ from utils.charts import months, colorPrimary, colorSuccess, colorDanger, genera
 from django.core.files.storage import FileSystemStorage
 from graphapp.utils.csvform import parse_headers
 from graphapp.utils.csvtable import prepare_chart_data
+from graphapp.utils.csvtable import prepare_scatter_plot_data
 
 @staff_member_required
 def get_csv_file_names(request):
@@ -93,16 +94,16 @@ def get_pie_chart(request, csvfilename, csvcolumnname):
 
 @staff_member_required
 def get_scatter_chart(request, csvfilename, csvcolumnname, csvcolumnname2):
-    chart_data = prepare_chart_data(csvfilename, csvcolumnname)
+    chart_data = prepare_scatter_plot_data(csvfilename, csvcolumnname, csvcolumnname2)
     return JsonResponse({
         "title": f"Scatter Plot for {csvfilename} - {csvcolumnname}",
         "data": {
-            "labels": list(chart_data.keys()),
+            "labels": list(''),
             "datasets": [{
                 "label": f"Scatter Plot for {csvfilename} - {csvcolumnname} - {csvcolumnname2}",
                 "backgroundColor": generate_color_palette(len(chart_data)),
                 "borderColor": generate_color_palette(len(chart_data)),
-                "data": list(chart_data.values()),
+                "data": chart_data,
             }]
         },
     })
