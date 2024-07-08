@@ -27,3 +27,10 @@ django-admin startproject graphitude .
 # Note the dot (.) at the end, which ensures Django creates files in the current directory
 
 
+# Run the server
+python manage.py runserver
+
+
+
+
+
