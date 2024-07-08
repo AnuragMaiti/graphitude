@@ -146,36 +146,42 @@
   }
 
   function loadBarChart(csv_file_name, csv_column_name) {
+    let canvas = document.getElementById("barchart");
+    canvas.removeAttribute("hidden")
     loadChart(barchart, `/graphapp/csvanalysis/barchart/${csv_file_name}/${csv_column_name}/`);
   }
 
   function loadLineChart(csv_file_name, csv_column_name) {
+    let canvas = document.getElementById("linechart");
+    canvas.removeAttribute("hidden")
     loadChart(linechart, `/graphapp/csvanalysis/linechart/${csv_file_name}/${csv_column_name}/`);
   }
 
   function loadPieChart(csv_file_name, csv_column_name) {
+    let canvas = document.getElementById("piechart");
+    canvas.removeAttribute("hidden")
     loadChart(piechart, `/graphapp/csvanalysis/piechart/${csv_file_name}/${csv_column_name}/`);
   }
 
   function loadscatterPlot(csv_file_name, csv_column_name, csv_column_name2) {
+    let canvas = document.getElementById("scatterplot");
+    canvas.removeAttribute("hidden")
     loadChart(scatterplot, `/graphapp/csvanalysis/scatterplot/${csv_file_name}/${csv_column_name}/${csv_column_name2}/`);
   }
 
 </script>
 
-<div class="row">
-  <div class="col-6">
-    <canvas id="barchart"></canvas>
-  </div>
-  <div class="col-6">
-    <canvas id="linechart"></canvas>
-  </div>
-  <div class="col-6">
-    <canvas id="piechart"></canvas>
-  </div>
-  <div class="col-6">
-    <canvas id="scatterplot"></canvas>
-  </div>
+<div class="col-6">
+  <canvas id="barchart" hidden="hidden"></canvas>
+</div>
+<div class="col-6">
+  <canvas id="linechart" hidden="hidden"></canvas>
+</div>
+<div class="col-6">
+  <canvas id="piechart" hidden="hidden"></canvas>
+</div>
+<div class="col-6">
+  <canvas id="scatterplot" hidden="hidden"></canvas>
 </div>
 <script>
   let barchartCtx = document.getElementById("barchart").getContext("2d");
