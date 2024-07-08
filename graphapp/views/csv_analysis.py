@@ -44,7 +44,7 @@ def get_bar_chart(request, csvfilename, csvcolumnname):
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "Bar Chart($)",
+                "label": f"Bar Chart for file: {csvfilename} and column: {csvcolumnname}",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
                 "data": list(chart_data.values()),
@@ -65,7 +65,7 @@ def get_line_chart(request, csvfilename, csvcolumnname):
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "-",
+                "label": f"Line Chart for {csvfilename} - {csvcolumnname}",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
                 "data": list(chart_data.values()),
@@ -80,26 +80,26 @@ def get_pie_chart(request, csvfilename, csvcolumnname):
     return JsonResponse({
         "title": f"Pie Chart for {csvfilename} - {csvcolumnname}",
         "data": {
-            "labels": ["Successful", "Unsuccessful"],
+            "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "-",
+                "label": f"Pie Chart for {csvfilename} - {csvcolumnname}",
                 "backgroundColor": [colorSuccess, colorDanger],
                 "borderColor": [colorSuccess, colorDanger],
-                "data": chart_data,
+                "data": list(chart_data.values()),
             }]
         },
     })
 
 
 @staff_member_required
-def get_pie_chart2(request, csvfilename, csvcolumnname):
+def get_scatter_chart(request, csvfilename, csvcolumnname, csvcolumnname2):
     chart_data = prepare_chart_data(csvfilename, csvcolumnname)
     return JsonResponse({
-        "title": f"Pie Chart for {csvfilename} - {csvcolumnname}",
+        "title": f"Scatter Plot for {csvfilename} - {csvcolumnname}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "-",
+                "label": f"Scatter Plot for {csvfilename} - {csvcolumnname} - {csvcolumnname2}",
                 "backgroundColor": generate_color_palette(len(chart_data)),
                 "borderColor": generate_color_palette(len(chart_data)),
                 "data": list(chart_data.values()),

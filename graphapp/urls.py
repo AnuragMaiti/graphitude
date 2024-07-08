@@ -19,13 +19,13 @@ urlpatterns = [
     path("charts/barchart/<int:year>/", charts.get_bar_chart, name="barchart"),
     path("charts/linechart/<int:year>/", charts.get_line_chart, name="linechart"),
     path("charts/piechart/<int:year>/", charts.get_pie_chart, name="piechart"),
-    path("charts/piechart2/<int:year>/", charts.get_pie_chart2, name="piechart2"),
+    path("charts/scatterplot/<int:year>/<str:column2>", charts.get_scatter_chart, name="scatterplot"),
 
     path("csvanalysis/csvfilenames/", csv_analysis.get_csv_file_names, name="csvfilenames"),
     path("csvanalysis/csvcolumnnames/<str:csvfilename>", csv_analysis.get_csv_column_names, name="csvcolumnnames"),
     path("csvanalysis/barchart/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_bar_chart, name="csvbarchart"),
     path("csvanalysis/linechart/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_line_chart, name="csvlinechart"),
     path("csvanalysis/piechart/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_pie_chart, name="csvpiechart"),
-    path("csvanalysis/piechart2/<str:csvfilename>/<str:csvcolumnname>/", csv_analysis.get_pie_chart2, name="csvpiechart2"),
+    path("csvanalysis/scatterplot/<str:csvfilename>/<str:csvcolumnname>/<str:csvcolumnname2>/", csv_analysis.get_scatter_chart, name="csvscatterplot"),
 
 ]

@@ -26,13 +26,13 @@ def get_filter_options(request):
 
 @staff_member_required
 def get_bar_chart(request, year):
-    chart_data =  {1:2,3:4,5:6,'successful':True}
+    chart_data =  {1:2,3:4,5:6,7:9}
     return JsonResponse({
         "title": f"For Bar Chart in {year}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "Bar Chart($)",
+                "label": "Bar Chart",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
                 "data": list(chart_data.values()),
@@ -43,13 +43,13 @@ def get_bar_chart(request, year):
 
 @staff_member_required
 def get_line_chart(request, year):
-    chart_data =  {1:2,3:4,5:6,'successful':True}
+    chart_data =  {1:2,3:4,5:6,7:8}
     return JsonResponse({
         "title": f"For Line Chart in {year}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "-",
+                "label": "Line Chart",
                 "backgroundColor": colorPrimary,
                 "borderColor": colorPrimary,
                 "data": list(chart_data.values()),
@@ -60,34 +60,30 @@ def get_line_chart(request, year):
 
 @staff_member_required
 def get_pie_chart(request, year):
-    chart_data = [{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':True},{1:2,3:4,5:6,'successful':False},]
-
+    chart_data =  {1:2,3:4,5:6,7:8}
     return JsonResponse({
         "title": f"For Pie Chart in {year}",
         "data": {
-            "labels": ["Successful", "Unsuccessful"],
+            "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "-",
-                "backgroundColor": [colorSuccess, colorDanger],
-                "borderColor": [colorSuccess, colorDanger],
-                "data": [3,4
-                    # chart_data.filter(successful=True).count(),
-                    # chart_data.filter(successful=False).count(),
-                ],
+                "label": "Pie Chart",
+                "backgroundColor":generate_color_palette(len(chart_data)),
+                "borderColor": generate_color_palette(len(chart_data)),
+                "data": list(chart_data.values()),
             }]
         },
     })
 
 
 @staff_member_required
-def get_pie_chart2(request, year):
+def get_scatter_chart(request, year, column2):
     chart_data = {1:2,3:4,5:6}
     return JsonResponse({
-        "title": f"For Pie Chart2  in {year}",
+        "title": f"For Scatter Plot in {year} - {column2}",
         "data": {
             "labels": list(chart_data.keys()),
             "datasets": [{
-                "label": "-",
+                "label": "Scatter Plot",
                 "backgroundColor": generate_color_palette(len(chart_data)),
                 "borderColor": generate_color_palette(len(chart_data)),
                 "data": list(chart_data.values()),
