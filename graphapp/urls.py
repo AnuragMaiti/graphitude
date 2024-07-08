@@ -31,4 +31,6 @@ urlpatterns = [
 
     path("predictivemodel/buildpredictivemodel/", predictive_model.build_predictive_model, name="buildpredictivemodel"),
     path("predictivemodel/testpredictivemodel/", predictive_model.test_predictive_model, name="testpredictivemodel"),
+    path("predictivemodel/modelnames/", predictive_model.get_model_names, name="modelnames"),
+    
 ]
