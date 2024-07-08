@@ -1,0 +1,19 @@
+{% load render_table from django_tables2 %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>CSV View</title>
+    <!-- Optional: Include Bootstrap 4 CSS for styling -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <h1>CSV</h1>
+        {% render_table table %}
+    </div>
+</body>
+
+</html>
