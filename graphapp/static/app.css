@@ -25,7 +25,6 @@
     border-radius: 10px;
     color: #fff;
     cursor: pointer;
-    transition: background .2s ease-in-out;
   }
   
   input[type=file]::file-selector-button:hover {
@@ -38,13 +37,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 180px;
+    width: 87%;
     padding: 20px;
     border-radius: 10px;
     border: 2px dashed #555;
     color: #444;
     cursor: pointer;
-    transition: background .2s ease-in-out, border .2s ease-in-out;
   }
   
   .drop-container:hover {
@@ -61,5 +60,4 @@
     font-size: 20px;
     font-weight: bold;
     text-align: center;
-    transition: color .2s ease-in-out;
   }

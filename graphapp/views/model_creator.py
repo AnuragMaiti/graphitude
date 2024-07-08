@@ -33,7 +33,7 @@ classifiers = {
     'Decision Tree': DecisionTreeClassifier(random_state=42),
     'Random Forest': RandomForestClassifier(random_state=42),
     'Gradient Boosting': GradientBoostingClassifier(random_state=42),
-    'SVM': SVC(random_state=42),
+    'SVC': SVC(random_state=42),
     'KNN': KNeighborsClassifier(),
     'Naive Bayes': GaussianNB()
 }

@@ -18,7 +18,6 @@ from utils.charts import months, colorPrimary, colorSuccess, colorDanger, genera
 
 class CsvUploader(TemplateView):
     template_name = 'csv_uploader.html'
-    # template_name = 'csv_table_view.html'
 
     def decode_utf8(self, input_iterator):
         for l in input_iterator:
@@ -38,32 +37,19 @@ class CsvUploader(TemplateView):
             csv_table =  load_csv_table(file_path)
             # print(csv_table)
             context['table'] = csv_table
+            context['csv_file_name'] = saved_file
             return render(request, self.template_name, context)
-  
         return render(request, self.template_name,context)
-
-
-    def post_raw_process(self, request):
-        csv_file = request.FILES['csv'] if 'csv' in request.FILES else None
-        if csv_file:
-            # save attached file
-            # create a new instance of FileSystemStorage
+    
+    def get(self, request):
+        context = {}
+        if(request.GET):
+            csv_file_name = request.GET['csv_file_name']
             fs = FileSystemStorage()
-            saved_file = fs.save(csv_file.name, csv_file)
-            # the fileurl variable now contains the url to the file. This can be used to serve the file when needed.
-            # file_url = fs.url(saved_file)
-            file_path = fs.path(saved_file)
-            with open(file_path, 'r',  encoding='utf-8') as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    header = list(row.keys())
-                    break
-                data = []
-                for row in reader:
-                    values = list(row.values())
-                    data.append(values)
-        context={}
-        context['header'] = header
-        context['data'] = data
-        return render(request, self.template_name, context)
+            file_path = fs.path(csv_file_name)
+            csv_table =  load_csv_table(file_path)
+            # print(csv_table)
+            context['table'] = csv_table
+            context['csv_file_name'] = csv_file_name
+        return render(request, self.template_name,context)
 

@@ -3,7 +3,7 @@ import django_tables2 as tables
 import csv
 from django.db import models
 from django.core.files.storage import FileSystemStorage
-
+display_csv_row_count = 20
 model_datatype_dict = {'bool': models.BooleanField(), 
                     'int':  models.IntegerField(), 
                     'float': models.FloatField(), 
@@ -15,7 +15,7 @@ def load_csv_file(file_path, headers):
         reader = csv.DictReader(file)
         for row in reader:
             values = dict(zip(list(headers.values()), list(row.values())))
-            if (len(data) > 10):
+            if (len(data) >= display_csv_row_count):
                 break
             data.append(values)
     return data

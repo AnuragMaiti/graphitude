@@ -1,18 +1,24 @@
 {% extends "base.html" %}
-{% block content %}
 {% load static %}
 {% load render_table from django_tables2 %}
+{% block content %}
+<script
+  src="https://code.jquery.com/jquery-3.6.4.min.js"
+  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+  crossorigin="anonymous">
+</script>
 <link rel="stylesheet" href="{% static 'app.css' %}">
-<div class="custom-file mb-4">
-    <div class="header" style="text-align: left;">
+<div>
+    <div class="header" style="text-align: left; width: 90%;">
         <div>Select CSV dataset</div>
     </div>
     <div>
-        <form id="example-form1" action="." method="post" enctype="multipart/form-data">{% csrf_token %}
+        <form id="upload-csv-form" action="." method="post" enctype="multipart/form-data">{% csrf_token %}
             <label for="images" class="drop-container">
-                <span class="drop-title">Drop files here</span>
-                or    
-                <input type="file" class="custom-file-input" id="customFile" name="csv" required accept=".csv" size="60">
+                <span class="drop-title">Drop a CSV file here</span>
+                or
+                <input type="file" class="custom-file-input" id="customFile" name="csv" required accept=".csv"
+                    size="60">
             </label>
             <div>
                 <div>
@@ -22,10 +28,44 @@
             </div>
         </form>
     </div>
+    <br>
+    <div>
+        <form id="show-csv-form" action="." method="get">{% csrf_token %}
+            <label for="select_csv_file_name">Show csv file:</label>
+            <select name="csv_file_name" id="csv_file_name" value="{{ csv_file_name }}"></select>
+            <input id="default_csv_file_name" type="hidden" value="{{ csv_file_name }}"></input>
+        <form>
+    </div>
 </div>
-<div class="custom-file mb-2" style="overflow:auto;">
+<div style="overflow:auto;width: 90%;">
     {% if table %}
     {% render_table table %}
     {% endif %}
-</div>    
+</div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/graphapp/csvanalysis/csvfilenames/",
+            type: "GET",
+            dataType: "json",
+            success: (jsonResponse) => {
+                // Load all the file names
+                $("#csv_file_name").empty()
+                jsonResponse.options.forEach(option => {
+                    $("#csv_file_name").append(new Option(option, option));
+                });
+                default_select_file = $("#default_csv_file_name").val()
+                $("#csv_file_name").val(default_select_file)
+            },
+            error: () => console.log("Failed to fetch csv files!")
+        });
+    });
+
+    $("#show-csv-form").on('change', function (event) {
+        $('#show-csv-form').attr("method", "GET")
+        var form = $('#show-csv-form');
+        form.submit();
+    });
+
+</script>
 {% endblock content %}

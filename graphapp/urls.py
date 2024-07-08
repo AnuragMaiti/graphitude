@@ -1,7 +1,7 @@
 from django.urls import path, include
 from graphapp.views import charts
 from graphapp.views import csv_form
-from graphapp.views import csv_upload
+from graphapp.views import csv_uploader
 from graphapp.views import home_page
 from graphapp.views import csv_analysis
 from graphapp.views import predictive_model
@@ -9,7 +9,7 @@ from graphapp.views import predictive_model
 
 urlpatterns = [
     path("", home_page.index, name="index"),
-    path('csvuploader/', csv_upload.CsvUploader.as_view(), name='csvuploader'),
+    path('csvuploader/', csv_uploader.CsvUploader.as_view(), name='csvuploader'),
     # path('csvtableview/', views.CsvTableView, name='csvtableview'),
     # Add more URLs as needed
     path('csvform/', csv_form.dynamic_form_view, name='csvform'),
